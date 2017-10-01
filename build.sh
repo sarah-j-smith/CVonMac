@@ -3,12 +3,13 @@ shortname=${libname##-l};
 dylibname="lib${shortname}.dylib"
 libpath=$(pkg-config python3 --libs-only-L);
 dylibpath=${libpath##-L}
-pythonlib="${dylibpath}/${dylibname}"
+export pythonlib="${dylibpath}/${dylibname}"
 pythoninc=$(pkg-config python3 --cflags-only-I)
-pythonlincludedir=${pythoninc##-I}
+export pythonincludedir=${pythoninc##-I}
+
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D CMAKE_INSTALL_PREFIX=/usr/local \
-    -D OPENCV_EXTRA_MODULES_PATH=~/depot/ai-test/opencv_contrib/modules \
+    -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
     -D PYTHON3_LIBRARY=$pythonlib \
     -D PYTHON3_INCLUDE_DIR=$pythonincludedir \
     -D PYTHON3_EXECUTABLE=$VIRTUAL_ENV/bin/python \
